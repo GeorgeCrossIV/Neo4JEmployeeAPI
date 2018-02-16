@@ -1,24 +1,112 @@
 ﻿<div class="jumbotron">
     <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <p class="lead">Neo4J API call test harness</p>
 </div>
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301871">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
+    <div class="col-md-12">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Search by Id</div>
+                            <div class="panel-body">
+                                <input type="text" id="empId" size="5" />
+                                <input type="button" value="Search" onclick="find();" />
+                                <p id="employee" />
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Add New Employee</div>
+                            <div class="panel-body">
+                                <div>
+                                    <label>Employee #: </label>
+                                    <input type="text" id="newEmpId" size="5" />
+                                </div>
+                                <div>
+                                    <label>Employee Name: </label>
+                                    <input type="text" id="name" size="50" />
+                                </div>
+                                <input type="button" value="Add Employee" onclick="addEmployee();" />
+                                <p id="newEmployee" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">All Employees</div>
+                        <div class="panel-body">
+                            <ul id="employees" />
+                        </div>
+                    </div>
+                </div>
+
+                <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+                <script>
+                var uri = '/api/employees';
+
+                $(document).ready(function () {
+                    // Send an AJAX request
+                    $.getJSON(uri)
+                        .done(function (data) {
+                            // On success, 'data' contains a list of employees
+                            $.each(data, function (key, item) {
+                                //Add a list item for the employee
+                                $('<li>', { text: formatItem(item) }).appendTo($('#employees'));
+                            });
+                        });
+                });
+
+                function refreshEmployees() {
+                    $.getJSON(uri)
+                        .done(function (data) {
+                            // On success, 'data' contains a list of employees
+                            $.each(data, function (key, item) {
+                                //Add a list item for the employee
+                                $('<li>', { text: formatItem(item) }).appendTo($('#employees'));
+                            });
+                        });
+                }
+
+                function formatItem(item) {
+                    return item.Name + ', ' + item.Emp_Id;           // format if needed
+                }
+
+                function find() {
+                    var id = $('#empId').val();
+
+                    $.getJSON(uri + '/' + id)
+                        .done(function (data) {
+                            $('#employee').text(formatItem(data));
+                        })
+                        .fail(function (jqXHR, textStatus, err) {
+                            $('#employee').text('Error: ' + err);
+                        });
+                }
+
+                function addEmployee() {
+                    var id = $('#newEmpId').val();
+                    var name = $('#name').val();
+
+                    $.ajax({
+                        url: uri + '/AddEmployee?id=' + id + '&name=' + name,
+                        type: "Post",
+                        data: JSON.stringify([id, name]),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            $('#newEmployee').text(data);
+                            location.reload();
+                        },
+                        error: function () { alert('error'); }
+                    });
+                }
+                </script>
+            </div>
+        </div>
+
+
     </div>
 </div>
