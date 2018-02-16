@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Neo4J Employee test page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Search by Id</div>
+                            <div class="panel-body">
+                            <input type="text" id="empId" size="5" />
+                            <input type="button" value="Search" onclick="find();" />
+                            <p id="employee" />
+                        </div>
+                    </div>
+                </div>
+                <div>  
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Add New Employee</div>
+                        <div class="panel-body">
+                            <div>
+                                <label>Employee #: </label>
+                                <input type="text" id="newEmpId" size="5" />
+                            </div>
+                            <div>
+                                <label>Employee Name: </label>
+                                <input type="text" id="name" size="50" />
+                            </div>
+                            <input type="button" value="Add Employee" onclick="addEmployee();" />
+                            <p id="newEmployee" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">All Employees</div>
+                    <div class="panel-body">
+                        <ul id="employees" />
+                    </div>
+                </div>
+            </div>
+
+            <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+            <script>
+                var uri = 'http://localhost:58015/api/employees';
+
+                $(document).ready(function () {
+                    // Send an AJAX request
+                    $.getJSON(uri)
+                        .done(function (data) {
+                            // On success, 'data' contains a list of employees
+                            $.each(data, function (key, item) {
+                                //Add a list item for the employee
+                                $('<li>', { text: formatItem(item) }).appendTo($('#employees'));
+                            });
+                        });
+                });
+
+                function refreshEmployees() {
+                    $.getJSON(uri)
+                        .done(function (data) {
+                            // On success, 'data' contains a list of employees
+                            $.each(data, function (key, item) {
+                                //Add a list item for the employee
+                                $('<li>', { text: formatItem(item) }).appendTo($('#employees'));
+                            });
+                        });
+                }
+
+                function formatItem(item) {
+                    return item.Name + ', ' + item.Emp_Id;           // format if needed
+                }
+
+                function find() {
+                    var id = $('#empId').val();
+
+                    $.getJSON(uri + '/' + id)
+                        .done(function (data) {
+                            $('#employee').text(formatItem(data));
+                        })
+                        .fail(function (jqXHR, textStatus, err) {
+                            $('#employee').text('Error: ' + err);
+                        });
+                }
+
+                function addEmployee() {
+                    var id = $('#newEmpId').val();
+                    var name = $('#name').val();
+
+                    $.ajax({
+                        url: uri + '/AddEmployee?id=' + id + '&name=' + name,
+                        type: "Post",
+                        data: JSON.stringify([id, name]),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            $('#newEmployee').text(data);
+                            location.reload();
+                        },
+                        error: function () { alert('error'); }
+                    });
+                }
+            </script>
+        </div>
+    </div>
+</body>
+</html>
