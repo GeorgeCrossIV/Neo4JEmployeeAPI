@@ -1,4 +1,4 @@
-# Neo4JEmployeeAPI
+# Neo4JEmployeeAPI-C#
 
 This repository contains a C# solution that build two Web API web services and a JavaScript web page that calls the two web services.
 The following tasks were completed:
