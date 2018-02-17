@@ -1,4 +1,3 @@
-
 # Neo4JEmployeeAPI
 
 This repository contains a C# solution that build two Web API web services and a JavaScript web page that calls the two web services.
@@ -7,6 +6,7 @@ The following tasks were completed:
   - Return all :Employee nodes
   - Develop a UI using plain HTML form. Can be viewed here: http://neo4jemployee.azurewebsites.net/index.html
   - Deploy app and Neo4J instance to a cloud instance. Implemented in Azure, would have been a similar install in AWS EC2.
+    - The Neo4J Server is here: http://neo4j-gmc.eastus.cloudapp.azure.com:7474/browser/; Password: Pass@word1
 
 To run the solution in the Software-as-a-Service (SaaS) implementation:
 - open this URI: http://neo4jemployee.azurewebsites.net/
