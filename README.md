@@ -16,6 +16,11 @@ To run the solution in the Software-as-a-Service (SaaS) implementation:
     - Add New Employee: 1) enter an employee id, 2) enter an employee name, and 3) click the Add Employee button
   - View The APIs
     - Click the API menu item on the navigation bar (http://neo4jemployee.azurewebsites.net/Help)
+    - The C# APIs have been implemented using Query parameters and action names
+    - The Java implementation has been implemented using FormBody parameters
+    - APIs
+      - Get Employees: http://neo4jemployee.azurewebsites.net/api/employees
+      - Add Employee: http://neo4jemployee.azurewebsites.net/api/employees/{id} - substitute {id}
   - View the Neo4J Server
     - Click the link "Connect to Neo4J Server" (http://neo4j-gmc.eastus.cloudapp.azure.com:7474/browser/)
       - Username: neo4j
