@@ -36,6 +36,8 @@ To run the solution locally, do the following:
 - Notes on local implementation
   - Install and run Neo4J desktop edition.
   - Use the IIS Express that's deployed with Visual Studio, unless greater control of the web server is desired
+  
+The Java version of the Web API web services is located here: https://github.com/GeorgeCrossIV/Neo4JEmployeeAPI-Java.
 
 
 
