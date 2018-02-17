@@ -4,7 +4,7 @@ This repository contains a C# solution that build two Web API web services and a
 
 To run the solution in the Software-as-a-Service (SaaS) implementation:
 - open this URI: http://neo4jemployee.azurewebsites.net/
-- To test do the following:
+- Do the following:
   - Test the functionality
     - Get All Employees: refreshing the page will call the API to get all Employees from the Neo4J server
     - Add New Employee: 1) enter an employee id, 2) enter an employee name, and 3) click the Add Employee button
@@ -14,6 +14,10 @@ To run the solution in the Software-as-a-Service (SaaS) implementation:
     - Click the link "Connect to Neo4J Server"
       - Username: neo4j
       - Password: Pass@word1
+- Notes on SaaS implementation
+  - Azure VM running Neo4J server edition
+  - Azure Web App running the C# solution that contains the Web APIs and the JavaScript html page
+  - Used the Neo4J .NET Drivers
 
 To run the solution locally, do the following:
 
@@ -23,6 +27,9 @@ To run the solution locally, do the following:
     - update the Uri setting to "bolt://localhost:<port>", where port is the port number assigned by Visual Studio
     - update the password; will mostly likely be "neo4j" if its a standard default desktop installation
 - Run the Neo4JEmployeeAPI project. By default, a local website should launch. 
+- Notes on local implementation
+  - Install and run Neo4J desktop edition.
+  - Use the IIS Express that's deployed with Visual Studio, unless greater control of the web server is desired
 
 
 
